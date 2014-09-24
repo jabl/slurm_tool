@@ -9,7 +9,12 @@
 # for example, if 'slurm partition' should differentiate node features, add 
 #     fmt_s_parts="%10P %.11l %.15F %10f %N"
 # into the following file
-user_vars=$HOME/.slurmvars
+if [ -n "$XDG_CONFIG_HOME" ]
+then
+    user_vars=$XDG_CONFIG_HOME/slurmvars
+else
+    user_vars=$HOME/.config/slurmvars
+fi
 
 # these can be overridden in ~/.slurmvars
 fmt_quick="%9P %.4C %.5D %.7m %.8f %.10q %.10T %r"
