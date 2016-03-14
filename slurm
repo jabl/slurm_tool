@@ -55,6 +55,10 @@ merge="/usr/bin/uniq -c"
 clean="/usr/bin/column -t"
 prune="/bin/grep -v '\ 0\ \ '"
 
+if [ -z "$COLUMNS" ]; then
+    COLUMNS=$(tput cols)
+fi
+
 function usage {
     self=`basename $0`
     cat <<EOF
