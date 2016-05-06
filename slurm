@@ -16,7 +16,7 @@ else
     user_vars=$HOME/.config/slurmvars
 fi
 
-# these can be overridden in ~/.slurmvars
+# these can be overridden in ~/.config/slurmvars
 fmt_quick="%9P %.4C %.5D %.7m %.8f %.10q %.10T %r"
 fmt_user="%18i %9P %14j %.11M %.16S %.8T %R"
 fmt_short="%8Q %9P %.8u [ %.4C x %5D %7m : %8f ] %.11l %.8T %r"
