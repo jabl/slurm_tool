@@ -51,6 +51,7 @@ cmd_parts="sinfo -o"
 cmd_prio="sprio -o"
 cmd_dead="sinfo -R -o '%20E %6t %N'"
 cmd_top="squeue -hao"
+cmd_features="sinfo -o '%50N %18F %9f %30G'"
 merge="/usr/bin/uniq -c"
 clean="/usr/bin/column -t"
 prune="/bin/grep -v '\ 0\ \ '"
@@ -91,6 +92,7 @@ Show nodes and resources in the cluster:
  $self cpus <partition>  cores available to partition, allocated and free
  $self cpus jobs         cores/memory reserved by running jobs
  $self cpus queue        cores/memory required by pending jobs
+ $self features          List features and GRES
 
 EOF
 
@@ -152,6 +154,9 @@ function commands {
 	    else
 		cmd="$cmd_queue_job '$fmt_full' | $clean"
 	    fi
+	    ;;
+	features)
+	    cmd="$cmd_features"
 	    ;;
 	prio)
 	    case $2 in
