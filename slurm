@@ -95,7 +95,7 @@ Show nodes and resources in the cluster:
  $self features          List features and GRES
 
 Other:
- $self v|version         Print versions of $self tool and slurm
+ $self v|version         Print versions of $self tool and slurm itself
 EOF
 
     if [ "$USER" = "root" ]; then
