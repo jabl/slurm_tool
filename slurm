@@ -94,6 +94,8 @@ Show nodes and resources in the cluster:
  $self cpus queue        cores/memory required by pending jobs
  $self features          List features and GRES
 
+Other:
+ $self v|version         Print versions of $self tool and slurm
 EOF
 
     if [ "$USER" = "root" ]; then
@@ -229,6 +231,9 @@ function commands {
 	    fi
 	    exit 0
 	    ;;
+        v|version)
+            version
+            ;;
 	*)
 	    usage
 	    ;;
@@ -342,6 +347,12 @@ function rescount {
   END{for(p in c){printf "%-10s %7i %7.0fG %8iM\n",p,c[p],m[p]/1024,m[p]/c[p]}}'
 }
 
+function version {
+    # The below string is automatically replaced by the makeversion script
+    SLURM_TOOL_VERSION='0.90'
+    echo "$0 tool ${SLURM_TOOL_VERSION}"
+    echo $(scontrol -V)
+}
 
 commands "$@"
 

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Update the SLURM_TOOL_VERSION tag in the main script with a version
+# from git
+
+version=$(git describe)
+sed -i "s/SLURM_TOOL_VERSION=.*/SLURM_TOOL_VERSION='${version}'/" slurm
