@@ -273,10 +273,13 @@ function jobacct {
     date=$(date -d "-$datespec" '+%Y-%m-%dT%H:%M')
     echo "JobID         JobName              Start            ReqMem  MaxRSS\
  TotalCPUTime    WallTime Tasks CPU Ns Exit State Nodes"
-    eval "$cmd_hist $fmt_a_hist -S $date $@" | awk 'BEGIN{FS="|"}
-  {printf "%-13s %-20.20s %-14.14s %8.8s %7.7s %12s %11s %5s %3.3s %-2.2s%5s %-5.4s %s\n",
-    ($1~/batch/) ? "└─batch" : ($1~/\.[0-9]/)?"  "$1:""$1,
-    ($1~/batch/) ? "*" : $2,
+    eval "$cmd_hist $fmt_a_hist -S $date -E Now $@" | awk 'BEGIN{FS="|"}
+  {
+    $1 = gensub("^[0-9]+_?[0-9]*\.(batch|extern)", "  └─ \\1", "g", $1)
+    $1 = gensub("^[0-9]+_?[0-9]*\\.([0-9]+)", "  └─ \\1", "g", $1)
+    printf "%-13s %-20.20s %-14.14s %8.8s %7.7s %12s %11s %5s %3.3s %-2.2s%5s %-5.4s %s\n",
+      $1,
+      ($1 ~ /(batch|extern)/) ? "*" : $2,
     gensub(/T/," ",1,substr($3,6)),
      $4,
 #    ($4>0) ? ($4~/G/)?
@@ -349,7 +352,7 @@ function rescount {
 
 function version {
     # The below string is automatically replaced by the makeversion script
-    SLURM_TOOL_VERSION='0.90'
+    SLURM_TOOL_VERSION='0.90-1-gbdc3eab'
     echo "$0 tool ${SLURM_TOOL_VERSION}"
     echo $(scontrol -V)
 }
